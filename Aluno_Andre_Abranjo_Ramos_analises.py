@@ -97,3 +97,19 @@ with open(ARQUIVO_CSV, mode='r', encoding='utf-8') as f:
 # Criação do Dataframe final a partir dos dados limpos coletados e tratados
 df = pd.DataFrame(dados_limpos)
 
+# Tratamento de dados vazios ou faltantes na coluna de filhos (CL_FHL) apliquei o valor que está mediana da coluna.
+if 'CL_FHL' in df.columns:
+    # Converte a coluna para numérico
+    df['CL_FHL'] = pd.to_numeric(df['CL_FHL'].astype(
+        str).str.replace(',', '.'), errors='coerce')
+    mediana_filhos = df['CL_FHL'].median()
+    # Se a mediana não existir  adota 0
+    if np.isnan(mediana_filhos):
+        mediana_filhos = 0.0
+    df['CL_FHL'] = df['CL_FHL'].fillna(mediana_filhos).astype(int)
+
+print("\nRelatório Final de Limpesa ")
+print(f"Total de registros lidos: {total_registros}")
+print(
+    f"Total de linhas duplicadas que foram deletadas: {linhas_duplicadas}")
+print(f"Total de linhas na base limpa: {len(df)} linhas.")
