@@ -113,3 +113,25 @@ print(f"Total de registros lidos: {total_registros}")
 print(
     f"Total de linhas duplicadas que foram deletadas: {linhas_duplicadas}")
 print(f"Total de linhas na base limpa: {len(df)} linhas.")
+
+# SPRINT 4: estatística descritiva
+
+print("\nEstatística Descritiva da Coluna CL_FHL (Número de Filhos):")
+if 'CL_FHL' in df.columns:
+    col_filhos = df['CL_FHL']
+    estatisticas_filhos = pd.DataFrame({
+        'Métrica': ['Contagem', 'Média', 'Mediana', 'Moda', 'Desvio Padrão', 'Mínimo', 'Máximo'],
+        'Valor': [
+            col_filhos.count(),
+            col_filhos.mean(),
+            col_filhos.median(),
+            col_filhos.mode().iloc[0] if not col_filhos.mode(
+            ).empty else np.nan,
+            col_filhos.std(),
+            col_filhos.min(),
+            col_filhos.max()
+        ]
+    })
+    print(estatisticas_filhos.to_string(index=False))
+else:
+    print("A coluna 'CL_FHL' não disponível para cálculos estatísticos.")
