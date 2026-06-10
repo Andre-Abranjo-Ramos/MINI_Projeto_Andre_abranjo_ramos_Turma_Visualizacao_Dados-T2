@@ -156,3 +156,15 @@ if 'PR_CAT' in df.columns:
         Qtd_Pedidos=('VR_VND_TRATADO', 'count')
     ).sort_values(by='Total_Vendas', ascending=False).reset_index()
     print(agrup_categoria.to_string(index=False))
+
+# SPRINT 6: Exportando e Salvando a Base Limpa para Avaliação
+caminho_saida = os.path.join(os.path.dirname(ARQUIVO_CSV), 'base_varejo_limpa_final.csv') if os.path.dirname(
+    ARQUIVO_CSV) else 'base_varejo_limpa_final.csv'
+
+# Dropando a coluna de data formatada.
+if 'DATA_FORMATADA' in df.columns:
+    df = df.drop(columns=['DATA_FORMATADA'])
+# Salvando a base limpa final em formato CSV, utilizando ';' como delimitador e o padrão UTF-8
+df.to_csv(caminho_saida, index=False, sep=';', encoding='utf-8')
+print(
+    f"\n🎉 Base de dados salva com sucesso em: '{caminho_saida}'")
