@@ -135,3 +135,24 @@ if 'CL_FHL' in df.columns:
     print(estatisticas_filhos.to_string(index=False))
 else:
     print("A coluna 'CL_FHL' não disponível para cálculos estatísticos.")
+# SPRINT 5: Documentação
+
+print("\nSPRINT 5: Documentação do Projeto")
+
+# Resumo  do total de vendas e de Volume por Gênero do Cliente
+if 'CL_GENERO' in df.columns:
+    print("\n Resumo  do total de vendas e de Volume por Gênero do Cliente:")
+    agrup_genero = df.groupby('CL_GENERO').agg(
+        Total_Vendas=('VR_VND_TRATADO', 'sum'),
+        Qtd_Itens_Comprados=('VR_VND_TRATADO', 'count')
+    ).reset_index()
+    print(agrup_genero.to_string(index=False))
+
+# Resumo do total de Vendas por categoria
+if 'PR_CAT' in df.columns:
+    print("\n Resumo do total de Vendas por categoria:")
+    agrup_categoria = df.groupby('PR_CAT').agg(
+        Total_Vendas=('VR_VND_TRATADO', 'sum'),
+        Qtd_Pedidos=('VR_VND_TRATADO', 'count')
+    ).sort_values(by='Total_Vendas', ascending=False).reset_index()
+    print(agrup_categoria.to_string(index=False))
